@@ -39,7 +39,7 @@ class DemoPlanner:
         self,
         llm_client: AsyncAzureOpenAI | AsyncOpenAI,
         model: str = "gpt-4o",
-        d365_base_url: str = "https://projectopscoreagentimplemented.crm.dynamics.com",
+        d365_base_url: str = "https://your-org.crm.dynamics.com",
         schema_discovery=None,
         learn_docs=None,
     ):

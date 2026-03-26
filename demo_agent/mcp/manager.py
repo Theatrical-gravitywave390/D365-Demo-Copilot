@@ -72,6 +72,7 @@ class MCPManager:
             return
 
         tasks = []
+        names = []
         for name, config in self._servers.items():
             if not config.enabled:
                 logger.info("Skipping disabled server: %s", name)
@@ -79,14 +80,19 @@ class MCPManager:
             client = MCPClient(config)
             self._clients[name] = client
             tasks.append(self._connect_one(name, client))
+            names.append(name)
 
         results = await asyncio.gather(*tasks, return_exceptions=True)
 
-        # Log any connection failures
-        for name, result in zip(self._clients.keys(), results):
+        # Log any connection failures and remove failed clients
+        failed = []
+        for name, result in zip(names, results):
             if isinstance(result, Exception):
                 logger.error("Failed to connect to %s: %s", name, result)
-                del self._clients[name]
+                failed.append(name)
+
+        for name in failed:
+            self._clients.pop(name, None)
 
         self._connected = True
         logger.info(

@@ -4,7 +4,7 @@
   "subtitle": "For Zava Engineering — Project Operations Demo",
   "customer_request": "Show me how employees track their time in D365 Project Operations",
   "estimated_duration_minutes": 10,
-  "d365_base_url": "https://projectopscoreagentimplemented.crm.dynamics.com",
+  "d365_base_url": "https://your-org.crm.dynamics.com",
   "sections": [
     {
       "id": "section-navigate-projects",

@@ -180,7 +180,7 @@ DATAVERSE_CLIENT_SECRET=...
 
 # Optional: Voice narration
 VOICE_ENABLED=true
-VOICE_PROVIDER=azure         # azure, openai, or browser
+VOICE_PROVIDER=auto          # auto, edge, or openai
 ```
 
 > **GitHub Models bridge:** Set `GITHUB_TOKEN` to a GitHub PAT. The agent routes requests through the GitHub Models inference endpoint (`https://models.inference.ai.azure.com`) using the standard OpenAI SDK — no extra dependencies required.

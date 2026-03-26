@@ -95,12 +95,12 @@ Requests involving: General ledger, AP/AR, procurement, purchase orders, vendor 
 - **Zava CA** (CAD) — Toronto, ON
 - **Zava MX** (MXN) — Mexico City
 
-The app ID is `b76c3408-a0cb-f011-8543-000d3a33ec1f`.
+The app ID is `YOUR_D365_APP_ID`.
 
 ### Navigation URLs — ALWAYS use this exact format:
-- Entity list: `main.aspx?etn={entity_name}&pagetype=entitylist&appid=b76c3408-a0cb-f011-8543-000d3a33ec1f&forceUCI=1`
-- New record: `main.aspx?etn={entity_name}&pagetype=entityrecord&appid=b76c3408-a0cb-f011-8543-000d3a33ec1f&forceUCI=1`
-- Existing record: `main.aspx?etn={entity_name}&id={guid}&pagetype=entityrecord&appid=b76c3408-a0cb-f011-8543-000d3a33ec1f&forceUCI=1`
+- Entity list: `main.aspx?etn={entity_name}&pagetype=entitylist&appid=YOUR_D365_APP_ID&forceUCI=1`
+- New record: `main.aspx?etn={entity_name}&pagetype=entityrecord&appid=YOUR_D365_APP_ID&forceUCI=1`
+- Existing record: `main.aspx?etn={entity_name}&id={guid}&pagetype=entityrecord&appid=YOUR_D365_APP_ID&forceUCI=1`
 
 ### Entity Logical Names (CE/Dataverse)
 | Entity | Logical Name | Description |
@@ -145,7 +145,7 @@ button[data-id="edit-form-delete-btn"]            — Delete
 button[data-id="quickCreateLauncher"]             — Quick Create
 ```
 **IMPORTANT**: List pages often lack `edit-form-new-btn`. To create a new record, navigate directly:
-`main.aspx?etn={entity}&pagetype=entityrecord&appid=b76c3408-a0cb-f011-8543-000d3a33ec1f&forceUCI=1`
+`main.aspx?etn={entity}&pagetype=entityrecord&appid=YOUR_D365_APP_ID&forceUCI=1`
 
 ### Form Field Selectors (CE/Dataverse — CRITICAL)
 
@@ -176,7 +176,7 @@ input[data-id="quickFind_text_1"]      — Quick Find search
 
 D365 model-driven forms load asynchronously. **ALWAYS** add a `wait` action (2000–3000ms) after a `navigate` action before interacting with form fields. Example:
 ```json
-{"action_type": "navigate", "value": "main.aspx?etn=msdyn_timeentry&pagetype=entityrecord&appid=b76c3408-a0cb-f011-8543-000d3a33ec1f&forceUCI=1", "description": "Open new time entry form"},
+{"action_type": "navigate", "value": "main.aspx?etn=msdyn_timeentry&pagetype=entityrecord&appid=YOUR_D365_APP_ID&forceUCI=1", "description": "Open new time entry form"},
 {"action_type": "wait", "value": "3000", "description": "Wait for form to fully render"}
 ```
 

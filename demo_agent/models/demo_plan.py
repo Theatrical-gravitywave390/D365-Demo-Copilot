@@ -172,7 +172,7 @@ class DemoPlan(BaseModel):
         description="Estimated demo duration in minutes"
     )
     d365_base_url: str = Field(
-        default="https://projectopscoreagentimplemented.crm.dynamics.com",
+        default="https://your-org.crm.dynamics.com",
         description="Base URL of the D365 environment"
     )
     sections: list[DemoSection] = Field(

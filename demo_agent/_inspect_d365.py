@@ -1,9 +1,11 @@
 """Inspect a live D365 page to discover real selectors."""
 import asyncio
+import os
 from playwright.async_api import async_playwright
 
 
 async def inspect():
+    d365_url = os.getenv("D365_BASE_URL", "https://your-org.crm.dynamics.com")
     p = await async_playwright().start()
     browser = await p.chromium.launch(headless=False, slow_mo=50)
     ctx = await browser.new_context(
@@ -16,7 +18,7 @@ async def inspect():
     page.set_default_timeout(30000)
     page.set_default_navigation_timeout(60000)
     await page.goto(
-        "https://projectopscoreagentimplemented.crm.dynamics.com",
+        d365_url,
         wait_until="domcontentloaded",
     )
     await page.wait_for_timeout(8000)
@@ -62,7 +64,7 @@ async def inspect():
 
     # --- Try navigating to time entries ---
     print("\n--- TRYING ENTITY LIST URL ---")
-    url = "https://projectopscoreagentimplemented.crm.dynamics.com/main.aspx?etn=msdyn_timeentry&pagetype=entitylist"
+    url = f"{d365_url}/main.aspx?etn=msdyn_timeentry&pagetype=entitylist"
     await page.goto(url, wait_until="domcontentloaded")
     await page.wait_for_timeout(5000)
     print("After nav URL:", page.url)

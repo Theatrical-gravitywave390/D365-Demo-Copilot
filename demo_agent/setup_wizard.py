@@ -32,13 +32,13 @@ SECTIONS = [
         "keys": [
             ("GITHUB_TOKEN", "GitHub personal-access token", "", True),
             ("GITHUB_MODELS_BASE_URL", "GitHub Models endpoint", "https://models.github.ai/inference", False),
-            ("GITHUB_COPILOT_MODEL", "Model name", "openai/gpt-5", False),
+            ("GITHUB_COPILOT_MODEL", "Model name", "openai/gpt-4o", False),
         ],
     },
     {
         "header": "D365 Environment",
         "keys": [
-            ("D365_BASE_URL", "Dataverse org URL (e.g. https://myorg.crm.dynamics.com)", "https://projectopscoreagentimplemented.crm.dynamics.com", True),
+            ("D365_BASE_URL", "Dataverse org URL (e.g. https://myorg.crm.dynamics.com)", "https://your-org.crm.dynamics.com", True),
         ],
     },
     {

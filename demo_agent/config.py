@@ -27,7 +27,7 @@ class DemoConfig:
     d365_base_url: str = field(
         default_factory=lambda: os.getenv(
             "D365_BASE_URL",
-            "https://projectopscoreagentimplemented.crm.dynamics.com",
+            "https://your-org.crm.dynamics.com",
         )
     )
     d365_fo_base_url: str = field(
@@ -81,7 +81,7 @@ class DemoConfig:
         )
     )
     github_copilot_model: str = field(
-        default_factory=lambda: os.getenv("GITHUB_COPILOT_MODEL", "openai/gpt-5")
+        default_factory=lambda: os.getenv("GITHUB_COPILOT_MODEL", "openai/gpt-4o")
     )
 
     # ---- Anthropic (alternative) ----

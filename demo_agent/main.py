@@ -782,7 +782,7 @@ def _plan_to_dict(plan) -> dict:
 def cli():
     """CLI entry point."""
     if "--setup" in sys.argv:
-        from .setup import run_setup
+        from .setup_wizard import run_setup
         run_setup()
         return
     try:
