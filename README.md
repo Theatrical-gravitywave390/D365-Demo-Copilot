@@ -7,11 +7,6 @@
 
 The D365 Demo Copilot takes customer requests in natural language, generates structured demo plans, and executes them in a live Dynamics 365 browser session with visual overlays, voice narration, and interactive controls — all through an in-browser sidecar chat panel.
 
-
-<img width="829" height="427" alt="Demo Copilot Screen shot" src="https://github.com/user-attachments/assets/e78ed77f-5bd3-4840-b8be-eddca99111d0" />
-
-Demo Video: https://youtu.be/DfJVVV22tCw?si=MYX2P46hUCiuX-t7
-
 ## Key Features
 
 | Feature | Description |
@@ -31,25 +26,92 @@ Demo Video: https://youtu.be/DfJVVV22tCw?si=MYX2P46hUCiuX-t7
 
 ## How It Works
 
-```
-User: "Show me how time entry and approval works"
-         │
-         ▼
-┌─────────────────────┐     ┌──────────────────────┐
-│   Demo Planner      │────▶│   Structured Plan    │
-│   (LLM-powered)     │     │   sections + steps   │
-└─────────────────────┘     └──────────┬───────────┘
-                                       │
-                                       ▼
-                            ┌──────────────────────┐
-                            │   Demo Executor      │
-                            │   Tell → Show → Tell │
-                            │   + Visual Overlays  │
-                            │   + Voice Narration  │
-                            └──────────────────────┘
+```mermaid
+flowchart LR
+    User["🗣️ User Request\n'Show me time entry\nand approval'"]
+    Planner["🧠 Demo Planner\n(LLM-powered)"]
+    Plan["📋 Demo Plan\nSections + Steps"]
+    Executor["🎬 Demo Executor\nTell → Show → Tell"]
+    Browser["🌐 D365 Browser\n+ Visual Overlays\n+ Voice Narration"]
+
+    User --> Planner --> Plan --> Executor --> Browser
 ```
 
 The agent opens a Playwright-controlled browser, injects a sidecar chat panel, and drives D365 through each demo step with spotlights, captions, business value callouts, and progress indicators.
+
+### Architecture Diagram
+
+```mermaid
+graph TB
+    subgraph User["User"]
+        Chat["💬 Sidecar Chat Panel\nin D365 browser"]
+    end
+
+    subgraph Agent["Agent Layer"]
+        Planner["🧠 Planner\nplanner.py"]
+        Executor["🎬 Executor\nexecutor.py"]
+        Narrator["🎙️ Narrator\nnarrator.py"]
+        State["⚡ State Machine\npause / resume / skip"]
+        Voice["🔊 Voice\nTTS narration"]
+        ScriptGen["📄 Script Generator\nPDF export"]
+    end
+
+    subgraph BrowserLayer["Browser Layer — Playwright"]
+        Controller["🌐 Browser Controller"]
+        ChatMgr["💬 Chat Panel Manager"]
+        OverlayMgr["🎨 Overlay Manager"]
+        D365Nav["📄 D365 Navigator"]
+    end
+
+    subgraph Overlay["Visual Overlay Engine — Injected JS/CSS"]
+        Spotlight["🔦 Spotlight"]
+        Captions["📝 Captions"]
+        ValueCard["💰 Value Cards"]
+        Progress["📊 Progress"]
+        ClickFX["✨ Click Ripple"]
+    end
+
+    subgraph External["External Services"]
+        LLM["☁️ LLM Provider\nAzure OpenAI / GitHub Models / OpenAI"]
+        D365["⚙️ Dynamics 365\nProject Operations"]
+        DataverseMCP["🔌 Dataverse MCP\nSchema Discovery"]
+        LearnMCP["📚 MS Learn MCP\nDoc Enrichment"]
+    end
+
+    Chat -->|"demo request"| Planner
+    Chat -->|"pause / skip / stop"| State
+    Planner -->|"generate plan"| LLM
+    Planner -->|"enrich context"| DataverseMCP
+    Planner -->|"enrich context"| LearnMCP
+    Planner -->|"DemoPlan JSON"| Executor
+    Narrator -->|"generate narration"| LLM
+    Executor --> Narrator
+    Executor --> State
+    Executor --> Voice
+    Executor --> ScriptGen
+    Executor -->|"browser actions"| Controller
+    Executor -->|"show overlays"| OverlayMgr
+    Executor -->|"D365 navigation"| D365Nav
+    ChatMgr -->|"inject & update"| Chat
+    Controller -->|"Playwright"| D365
+    OverlayMgr -->|"page.evaluate()"| Spotlight
+    OverlayMgr --> Captions
+    OverlayMgr --> ValueCard
+    OverlayMgr --> Progress
+    OverlayMgr --> ClickFX
+
+    classDef userNode fill:#E8F5E9,stroke:#2E7D32,color:#1B5E20
+    classDef agentNode fill:#FFF3E0,stroke:#E65100,color:#BF360C
+    classDef browserNode fill:#E0F7FA,stroke:#00695C,color:#004D40
+    classDef overlayNode fill:#FFF8E1,stroke:#F9A825,color:#F57F17
+    classDef externalNode fill:#FCE4EC,stroke:#C62828,color:#B71C1C
+
+    class Chat userNode
+    class Planner,Executor,Narrator,State,Voice,ScriptGen agentNode
+    class Controller,ChatMgr,OverlayMgr,D365Nav browserNode
+    class Spotlight,Captions,ValueCard,Progress,ClickFX overlayNode
+    class LLM,D365,DataverseMCP,LearnMCP externalNode
+```
 
 ## Getting Started
 
